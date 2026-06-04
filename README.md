@@ -1,70 +1,237 @@
-# Getting Started with Create React App
+# AI Web Summarizer Chrome Extension
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An AI-powered Chrome Extension that extracts content from the currently active webpage and generates a concise summary using an open-source NLP model. The extension is built using **React.js**, **JavaScript**, **Chrome Extension Manifest V3**, and the **Hugging Face Inference API**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+* Extracts text from the currently active webpage.
+* Generates AI-powered summaries using an open-source model.
+* Built with Chrome Extension Manifest V3 architecture.
+* React-based popup UI.
+* Uses Chrome Tabs API to access active tab information.
+* Uses Chrome Storage API for local persistence.
+* Implements message passing between popup, content scripts, and background service worker.
+* Lightweight and easy to extend with other AI models.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+### Frontend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* React.js
+* JavaScript
+* CSS
 
-### `npm run build`
+### Chrome Extension APIs
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Chrome Tabs API
+* Chrome Storage API
+* Chrome Runtime Messaging API
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### AI Model
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Hugging Face Inference API
+* facebook/bart-large-cnn
 
-### `npm run eject`
+### Architecture
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* Manifest V3
+* Service Worker
+* Content Scripts
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Project Structure
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```text
+ai-web-summarizer/
+│
+├── public/
+│   ├── manifest.json
+│   ├── background.js
+│   ├── contentScript.js
+│   └── icons/
+│       └── icon128.png
+│
+├── src/
+│   ├── App.js
+│   ├── App.css
+│   ├── index.js
+│   │
+│   └── services/
+│       └── api.js
+│
+├── .env
+├── package.json
+└── README.md
+```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## System Architecture
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```text
+React Popup UI
+       │
+       ▼
+Chrome Tabs API
+       │
+       ▼
+Content Script
+(Extract Webpage Text)
+       │
+       ▼
+Chrome Message Passing
+       │
+       ▼
+Background Service Worker
+       │
+       ▼
+Hugging Face API
+(BART-Large-CNN)
+       │
+       ▼
+Generated Summary
+       │
+       ▼
+React UI Display
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Installation
 
-### Analyzing the Bundle Size
+### Clone Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+git clone https://github.com/your-username/ai-web-summarizer.git
 
-### Making a Progressive Web App
+cd ai-web-summarizer
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Install Dependencies
 
-### Advanced Configuration
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Create a `.env` file in the root directory.
 
-### `npm run build` fails to minify
+```env
+REACT_APP_HF_API_KEY=YOUR_HUGGINGFACE_API_KEY
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Generate a free API key from Hugging Face.
+
+---
+
+## Running the Project
+
+### Start Development Server
+
+```bash
+npm start
+```
+
+### Create Production Build
+
+```bash
+npm run build
+```
+
+---
+
+## Loading the Extension in Chrome
+
+1. Open Chrome.
+2. Navigate to:
+
+```text
+chrome://extensions
+```
+
+3. Enable **Developer Mode**.
+4. Click **Load unpacked**.
+5. Select the generated `build` folder.
+6. The extension will appear in the Chrome toolbar.
+
+---
+
+## Workflow
+
+### Step 1: Open Any Webpage
+
+The user navigates to any webpage.
+
+### Step 2: Click Extension Icon
+
+The React popup UI opens.
+
+### Step 3: Extract Webpage Content
+
+The content script extracts visible text from the webpage.
+
+### Step 4: Generate Summary
+
+The extracted content is sent to the Hugging Face API.
+
+### Step 5: Display Results
+
+The generated summary is displayed inside the extension popup.
+
+---
+
+## Key Chrome APIs Used
+
+### Chrome Tabs API
+
+Used to identify the currently active tab.
+
+```javascript
+chrome.tabs.query({
+  active: true,
+  currentWindow: true
+});
+```
+
+### Chrome Runtime Messaging
+
+Used for communication between popup and content scripts.
+
+```javascript
+chrome.tabs.sendMessage(
+  tabId,
+  { action: "GET_PAGE_TEXT" }
+);
+```
+
+### Chrome Storage API
+
+Used for storing generated summaries.
+
+```javascript
+chrome.storage.local.set({
+  summary: summaryText
+});
+```
+
+---
+
+## Future Enhancements
+
+* Multi-language summarization
+* Copy summary to clipboard
+* Download summary as PDF
+* Summary history management
+* Support for multiple AI models
+* Dark mode
+* Article-focused extraction instead of full page extraction
+
+
